@@ -72,8 +72,6 @@ app_license = "MIT"
 
 doc_events = {
      "Customer": {
-         #"validate": "erpnext.selling.doctype.customer.customer.test_selco"
-         #"validate": "selco1.selco.doctype.selco_customizations.selco_customizations.test_selco_cust"
          "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_customer_validations"                        
     },
  }
