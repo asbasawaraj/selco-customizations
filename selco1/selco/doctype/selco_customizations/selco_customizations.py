@@ -21,3 +21,11 @@ def selco_customer_validations(doc,method):
     var6 = frappe.db.get_value("Customer", {"customer_contact_number": (doc.customer_contact_number)}, "customer_name")
     if var5 != "None" and doc.name != var5:
         frappe.throw("Customer with contact no " + doc.customer_contact_number + " already exists \n Customer ID : " + var5 + "\n Customer Name : " + var6)
+
+@frappe.whitelist()
+def selco_issue_updates(doc,method):
+    if self.workflow_state =="Complaint Closed By Branch":
+        cur_date = now_datetime().date()
+        self.status = "Closed"
+        self.resolution_date = now()
+        frappe.msgprint("resolution date is " + self.resolution_date + " and status is " + self.status)

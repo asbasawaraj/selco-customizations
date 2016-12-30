@@ -72,8 +72,12 @@ app_license = "MIT"
 
 doc_events = {
      "Customer": {
-         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_customer_validations"                        
+         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_customer_validations"
     },
+    "Issue": {
+         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_issue_updates"                        
+    },
+
  }
 
 # doc_events = {
