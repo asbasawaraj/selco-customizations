@@ -24,8 +24,7 @@ def selco_customer_validations(doc,method):
 
 @frappe.whitelist()
 def selco_issue_updates(doc,method):
-    if self.workflow_state =="Complaint Closed By Branch":
-        cur_date = now_datetime().date()
-        self.status = "Closed"
-        self.resolution_date = now()
-        frappe.msgprint("resolution date is " + self.resolution_date + " and status is " + self.status)
+    from frappe.utils import now,now_datetime
+    if doc.workflow_state =="Complaint Closed By Branch":
+        doc.status = "Closed"
+        doc.resolution_date = now()
