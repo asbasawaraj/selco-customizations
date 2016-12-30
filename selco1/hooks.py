@@ -75,7 +75,10 @@ doc_events = {
          "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_customer_validations"
     },
     "Issue": {
-         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_issue_updates"                        
+         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_issue_updates"
+    },
+    "Warranty Claim": {
+         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_warranty_claim_updates"                        
     },
 
  }

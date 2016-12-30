@@ -28,3 +28,8 @@ def selco_issue_updates(doc,method):
     if doc.workflow_state =="Complaint Closed By Branch":
         doc.status = "Closed"
         doc.resolution_date = now()
+
+@frappe.whitelist()
+def selco_warranty_claim_updates(doc,method):
+    if doc.workflow_state =="Dispatched From Godown":
+        doc.status = "Closed"
