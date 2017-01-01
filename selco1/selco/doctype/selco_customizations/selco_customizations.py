@@ -33,3 +33,21 @@ def selco_issue_updates(doc,method):
 def selco_warranty_claim_updates(doc,method):
     if doc.workflow_state =="Dispatched From Godown":
         doc.status = "Closed"
+
+@frappe.whitelist()
+def selco_purchase_receipt_updates(doc,method):
+    selco_cost_center = frappe.db.get_value("Warehouse",doc.godown,"cost_center")
+    for d in doc.get('items'):
+        d.cost_center = selco_cost_center
+    for d in doc.get('taxes'):
+        d.cost_center = selco_cost_center
+
+    po_list = []
+    po_list_date = []
+    for item_selco in doc.items:
+        if item_selco.prevdoc_docname not in po_list:
+            po_list.append(item_selco.prevdoc_docname)
+            po_list_date.append(frappe.utils.formatdate(frappe.db.get_value('Purchase Order', item_selco.prevdoc_docname, 'transaction_date'),"dd-MM-yyyy"))
+    doc.selco_list_of_po= ','.join([str(i) for i in po_list])
+    doc.selco_list_of_po_date= ','.join([str(i) for i in po_list_date])
+        #End of Insert By basawaraj On 7th september for printing the list of PO when PR is done by importing items from multiple PO
