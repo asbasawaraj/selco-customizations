@@ -83,6 +83,12 @@ doc_events = {
     "Purchase Receipt": {
          "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_purchase_receipt_updates"
     },
+    "Stock Entry": {
+         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_stock_entry_updates"
+    },
+    "Material Request": {
+         "validate": "selco1.selco.doctype.selco_customizations.selco_customizations.selco_material_request_updates"
+    },
  }
 
 # doc_events = {

@@ -5,6 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+import operator
 
 class SelcoCustomizations(Document):
     pass
@@ -51,3 +52,31 @@ def selco_purchase_receipt_updates(doc,method):
     doc.selco_list_of_po= ','.join([str(i) for i in po_list])
     doc.selco_list_of_po_date= ','.join([str(i) for i in po_list_date])
         #End of Insert By basawaraj On 7th september for printing the list of PO when PR is done by importing items from multiple PO
+
+@frappe.whitelist()
+def selco_stock_entry_updates(doc,method):
+	#Inserted By basawaraj On 21st Dec
+	selco_cost_center = frappe.db.get_value("Warehouse",doc.to_warehouse,"cost_center")
+	#frappe.msgprint(_("{0} subscribers added").format(selco_cost_center))
+	for d in doc.get('items'):
+		d.cost_center = selco_cost_center
+	      #End of Insert By basawaraj On 21st Dec
+
+@frappe.whitelist()
+def selco_material_request_updates(doc,method):
+	#Start of Insert By Poorvi on 10-09-2016 for IBM value calculation
+	selco_ibm_value = 0
+	#if doc.workflow_state =="Approval Pending by SM - IBM":
+	for idx,selco_item in enumerate(doc.items):
+		selco_rate = frappe.db.sql("""select price_list_rate
+			from `tabItem Price`
+			where item_code = %s and price_list = "Branch Sales" """,(selco_item.item_code))
+		if selco_rate:
+			var1=selco_rate[0][0]
+		else:
+			var1=0
+		doc.items[idx].selco_rate =var1
+		selco_ibm_value = selco_ibm_value + (var1 * selco_item.qty)
+	doc.selco_ibm_value = selco_ibm_value
+	#doc.items.sort(key = lambda x: x.item_code)
+	doc.items.sort(key=operator.attrgetter("item_code"), reverse=False)
