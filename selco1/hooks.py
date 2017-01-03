@@ -10,6 +10,10 @@ app_color = "red"
 app_email = "poorvi@selco-india.com"
 app_version = "0.0.1"
 app_license = "MIT"
+fixtures = ["Custom Field",
+"Property Setter",
+"Custom Script",
+"Print Format"]
 
 # Includes in <head>
 # ------------------
